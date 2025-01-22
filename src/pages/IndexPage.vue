@@ -1,7 +1,8 @@
 <template>
   <q-page class="flex column" :class="bgClass">
     <div class="col q-pt-lg q-px-md">
-      <q-input v-model="search" @keyup.enter="getWeatherBySearch" placeholder="Search" dark borderless>
+      <q-input v-model="search" @keyup.enter="getWeatherBySearch" :placeholder="$t('searchPlaceholder')" dark
+        borderless>
         <template v-slot:before>
           <q-icon @click="getLocation" name="my_location" />
         </template>
@@ -24,7 +25,6 @@
       </div>
 
       <div class="col text-center">
-        <!-- <img :src="`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`" class="my_image" /> -->
         <img v-if="weatherData.weather && weatherData.weather[0]"
           :src="`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`" />
       </div>
@@ -32,10 +32,10 @@
 
     <template v-else>
       <div class="col column text-center text-white">
-        <div class="col text-h2 text-weight-thin">Weather<br />Widget</div>
+        <div class="col text-h2 text-weight-thin">{{ $t('weatherWidget') }}<br /></div>
         <q-btn @click="getLocation" class="col" flat>
           <q-icon left size="3em" name="my_location" />
-          <div>Find my location</div>
+          <div>{{ $t('findMyLocation') }}</div>
         </q-btn>
       </div>
     </template>
@@ -48,6 +48,7 @@
 import { ref, computed } from "vue";
 import { api } from "boot/axios";
 import { useQuasar } from "quasar";
+import { useI18n } from "vue-i18n";
 
 interface WeatherData {
   name: string;
@@ -58,6 +59,7 @@ interface WeatherData {
 export default {
   name: "IndexPage",
   setup() {
+    const { t } = useI18n();
     const $q = useQuasar();
     const search = ref<string>("");
     const weatherData = ref<WeatherData | null>(null);
@@ -127,7 +129,7 @@ export default {
           $q.notify({
             color: 'negative',
             position: 'top',
-            message: "Bad response!",
+            message: t('responseError'),
             icon: 'report_problem'
           });
         });
@@ -147,7 +149,7 @@ export default {
       }
     });
 
-    return { search, weatherData, getLocation, getWeatherBySearch, bgClass };
+    return { search, weatherData, getLocation, getWeatherBySearch, bgClass, t };
   },
 };
 </script>

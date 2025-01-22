@@ -14,4 +14,5 @@ export default {
   mainWeatherPageCaption: "Перейти на головну сторінку погоди",
   weatherForecastTitle: "Прогноз погоди",
   weatherForecastCaption: "Перевірити прогноз погоди",
+  errorMessage: "Помилка відповіді",
 };

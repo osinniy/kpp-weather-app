@@ -14,4 +14,5 @@ export default {
   mainWeatherPageCaption: "Go to the main weather page",
   weatherForecastTitle: "Weather Forecast",
   weatherForecastCaption: "Check the weather forecast",
+  errorMessage: "Response Error",
 };

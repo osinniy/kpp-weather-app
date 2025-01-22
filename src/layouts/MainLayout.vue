@@ -7,6 +7,8 @@
         <q-toolbar-title>
           {{ $t('appTitle') }}
         </q-toolbar-title>
+
+        <q-btn flat dense round icon="language" aria-label="Language" @click="toggleLanguage" />
       </q-toolbar>
     </q-header>
 
@@ -28,10 +30,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
-import Item, { type ItemProps } from 'components/Menu.vue';
+import Item from 'components/Menu.vue';
 
 export default defineComponent({
   name: 'MainLayout',
@@ -41,19 +43,27 @@ export default defineComponent({
   },
 
   setup() {
-    const { t } = useI18n();
+    const { t, locale } = useI18n();
     const route = useRoute();
 
     const isActiveLink = (link: string) => {
       return route.path === link;
     };
 
-    return { t, isActiveLink };
-  },
+    const toggleLanguage = () => {
+      const newLocale = locale.value === 'en-US' ? 'uk' : 'en-US';
+      locale.value = newLocale;
+      localStorage.setItem('user-locale', newLocale);
+    };
 
-  data() {
-    const { t } = useI18n();
-    const itemsList: ItemProps[] = [
+    onMounted(() => {
+      const savedLocale = localStorage.getItem('user-locale');
+      if (savedLocale) {
+        locale.value = savedLocale;
+      }
+    });
+
+    const linksList = computed(() => [
       {
         title: t('mainWeatherPageTitle'),
         caption: t('mainWeatherPageCaption'),
@@ -66,10 +76,13 @@ export default defineComponent({
         icon: 'cloud',
         link: '/weather-forecast'
       }
-    ];
+    ]);
 
+    return { t, isActiveLink, toggleLanguage, linksList };
+  },
+
+  data() {
     return {
-      linksList: itemsList,
       leftDrawerOpen: false
     }
   },

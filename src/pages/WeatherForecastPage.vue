@@ -1,12 +1,12 @@
 <template>
     <q-page class="weather-page">
-        <q-input v-model="city" label="Search for a city" @keyup.enter="fetchForecast" outlined clearable />
-        <q-btn label="Get Forecast" @click="fetchForecast" color="primary" />
+        <q-input v-model="city" :label="$t('searchForCity')" @keyup.enter="fetchForecast" outlined clearable />
+        <q-btn :label="$t('getForecast')" @click="fetchForecast" color="primary" class="q-mt-md" />
 
         <q-spinner v-if="weatherStore.loading" />
 
         <div v-if="weatherStore.error" class="error-message">
-            {{ weatherStore.error }}
+            {{ $t('errorMessage') }}
         </div>
 
         <div class="forecast-container" v-if="weatherStore.forecast.length">

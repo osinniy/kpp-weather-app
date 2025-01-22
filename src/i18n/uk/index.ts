@@ -1,5 +1,5 @@
 export default {
-  appTitle: "Погодний додаток",
+  appTitle: "Погодний застосунок",
   menu: "Меню",
   searchPlaceholder: "Пошук",
   findMyLocation: "Знайти моє місцезнаходження",
@@ -10,8 +10,8 @@ export default {
   temperature: "Температура",
   description: "Опис",
   date: "Дата",
-  mainWeatherPageTitle: "Головна сторінка погоди",
-  mainWeatherPageCaption: "Перейти на головну сторінку погоди",
+  mainWeatherPageTitle: "Поточна погода",
+  mainWeatherPageCaption: "Перевірити поточну погоду",
   weatherForecastTitle: "Прогноз погоди",
   weatherForecastCaption: "Перевірити прогноз погоди",
   errorMessage: "Помилка відповіді",

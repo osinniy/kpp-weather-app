@@ -1,7 +1,18 @@
-// This is just an example,
-// so you can safely delete all default props below
-
 export default {
-  failed: 'Action failed',
-  success: 'Action was successful'
+  appTitle: "Weather App",
+  menu: "Menu",
+  searchPlaceholder: "Search",
+  findMyLocation: "Find my location",
+  weatherWidget: "Weather Widget",
+  responseError: "Response Error",
+  searchForCity: "Search for a city",
+  getForecast: "Get Forecast",
+  temperature: "Temperature",
+  description: "Description",
+  date: "Date",
+  mainWeatherPageTitle: "Current Weather",
+  mainWeatherPageCaption: "Check the current weather",
+  weatherForecastTitle: "Weather Forecast",
+  weatherForecastCaption: "Check the weather forecast",
+  errorMessage: "Response Error",
 };

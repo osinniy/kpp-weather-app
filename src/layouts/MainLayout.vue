@@ -1,44 +1,35 @@
 <template>
   <q-layout view="lHh Lpr lFf">
+    <!-- Header with toolbar -->
     <q-header elevated>
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+        <!-- Menu button -->
+        <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
 
+        <!-- Application title -->
         <q-toolbar-title>
-          Quasar App
+          {{ $t('appTitle') }}
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <!-- Language toggle button -->
+        <q-btn flat dense round icon="language" aria-label="Language" @click="toggleLanguage" />
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
+    <!-- Drawer with menu items -->
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
+        <q-item-label header>
+          {{ $t('menu') }}
         </q-item-label>
 
-        <EssentialLink
-          v-for="link in linksList"
-          :key="link.title"
-          v-bind="link"
-        />
+        <!-- Menu links -->
+        <EssentialLink v-for="link in linksList" :key="link.title" v-bind="link"
+          :active="link.link ? isActiveLink(link.link) : false" exact />
       </q-list>
     </q-drawer>
 
+    <!-- Page container for routing views -->
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -46,70 +37,70 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import EssentialLink, { type EssentialLinkProps } from 'components/EssentialLink.vue';
-
-const linksList: EssentialLinkProps[] = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-];
+import { defineComponent, onMounted, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
+import Item from 'components/Menu.vue';
 
 export default defineComponent({
   name: 'MainLayout',
 
   components: {
-    EssentialLink
+    EssentialLink: Item
   },
 
-  data () {
+  setup() {
+    const { t, locale } = useI18n();
+    const route = useRoute();
+
+    // Check if the link is active
+    const isActiveLink = (link: string) => {
+      return route.path === link;
+    };
+
+    // Toggle language between English and Ukrainian
+    const toggleLanguage = () => {
+      const newLocale = locale.value === 'en-US' ? 'uk' : 'en-US';
+      locale.value = newLocale;
+      localStorage.setItem('user-locale', newLocale);
+    };
+
+    // Load saved locale from localStorage on mount
+    onMounted(() => {
+      const savedLocale = localStorage.getItem('user-locale');
+      if (savedLocale) {
+        locale.value = savedLocale;
+      }
+    });
+
+    // List of menu links
+    const linksList = computed(() => [
+      {
+        title: t('mainWeatherPageTitle'),
+        caption: t('mainWeatherPageCaption'),
+        icon: 'home',
+        link: '/'
+      },
+      {
+        title: t('weatherForecastTitle'),
+        caption: t('weatherForecastCaption'),
+        icon: 'cloud',
+        link: '/weather-forecast'
+      }
+    ]);
+
+    return { t, isActiveLink, toggleLanguage, linksList };
+  },
+
+  data() {
     return {
-      linksList,
       leftDrawerOpen: false
     }
   },
 
   methods: {
-    toggleLeftDrawer () {
+    // Toggle the left drawer
+    toggleLeftDrawer() {
       this.leftDrawerOpen = !this.leftDrawerOpen;
     }
   }

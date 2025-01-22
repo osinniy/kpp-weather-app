@@ -1,17 +1,12 @@
 <template>
-  <q-item
-    clickable
-    tag="a"
-    target="_blank"
-    :href="link"
-  >
-    <q-item-section
-      v-if="icon"
-      avatar
-    >
+  <!-- Menu item -->
+  <q-item :active="active" clickable tag="router-link" :to="link" exact>
+    <!-- Icon section -->
+    <q-item-section v-if="icon" avatar>
       <q-icon :name="icon" />
     </q-item-section>
 
+    <!-- Title and caption section -->
     <q-item-section>
       <q-item-label>{{ title }}</q-item-label>
       <q-item-label caption>{{ caption }}</q-item-label>
@@ -21,16 +16,24 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { QItem, QItemSection, QItemLabel, QIcon } from 'quasar';
 
-export interface EssentialLinkProps {
+export interface ItemProps {
   title: string;
   caption?: string;
   link?: string;
   icon?: string;
+  active?: boolean;
 };
 
 export default defineComponent({
   name: 'EssentialLink',
+  components: {
+    QItem,
+    QItemSection,
+    QItemLabel,
+    QIcon
+  },
   props: {
     title: {
       type: String,
@@ -50,6 +53,11 @@ export default defineComponent({
     icon: {
       type: String,
       default: ''
+    },
+
+    active: {
+      type: Boolean,
+      default: false
     }
   }
 });

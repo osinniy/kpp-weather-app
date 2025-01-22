@@ -1,9 +1,17 @@
 export default {
   appTitle: "Weather App",
-  quasarVersion: "Quasar v",
-  essentialLinks: "Essential Links",
+  menu: "Menu",
   searchPlaceholder: "Search",
   findMyLocation: "Find my location",
   weatherWidget: "Weather Widget",
-  responseError: "Response Error"
+  responseError: "Response Error",
+  searchForCity: "Search for a city",
+  getForecast: "Get Forecast",
+  temperature: "Temperature",
+  description: "Description",
+  date: "Date",
+  mainWeatherPageTitle: "Main Weather Page",
+  mainWeatherPageCaption: "Go to the main weather page",
+  weatherForecastTitle: "Weather Forecast",
+  weatherForecastCaption: "Check the weather forecast",
 };

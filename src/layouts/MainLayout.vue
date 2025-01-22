@@ -7,18 +7,17 @@
         <q-toolbar-title>
           {{ $t('appTitle') }}
         </q-toolbar-title>
-
-        <div>{{ $t('quasarVersion', { version: $q.version }) }}</div>
       </q-toolbar>
     </q-header>
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
         <q-item-label header>
-          {{ $t('essentialLinks') }}
+          {{ $t('menu') }}
         </q-item-label>
 
-        <EssentialLink v-for="link in linksList" :key="link.title" v-bind="link" />
+        <EssentialLink v-for="link in linksList" :key="link.title" v-bind="link"
+          :active="link.link ? isActiveLink(link.link) : false" exact />
       </q-list>
     </q-drawer>
 
@@ -31,68 +30,46 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
-import EssentialLink, { type EssentialLinkProps } from 'components/EssentialLink.vue';
-
-const linksList: EssentialLinkProps[] = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-];
+import { useRoute } from 'vue-router';
+import Item, { type ItemProps } from 'components/Menu.vue';
 
 export default defineComponent({
   name: 'MainLayout',
 
   components: {
-    EssentialLink
+    EssentialLink: Item
   },
 
   setup() {
     const { t } = useI18n();
-    return { t };
+    const route = useRoute();
+
+    const isActiveLink = (link: string) => {
+      return route.path === link;
+    };
+
+    return { t, isActiveLink };
   },
 
   data() {
+    const { t } = useI18n();
+    const itemsList: ItemProps[] = [
+      {
+        title: t('mainWeatherPageTitle'),
+        caption: t('mainWeatherPageCaption'),
+        icon: 'home',
+        link: '/'
+      },
+      {
+        title: t('weatherForecastTitle'),
+        caption: t('weatherForecastCaption'),
+        icon: 'cloud',
+        link: '/weather-forecast'
+      }
+    ];
+
     return {
-      linksList,
+      linksList: itemsList,
       leftDrawerOpen: false
     }
   },

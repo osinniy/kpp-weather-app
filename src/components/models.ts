@@ -6,3 +6,10 @@ export interface Todo {
 export interface Meta {
   totalCount: number;
 }
+
+export interface WeatherForecast {
+  date: string;
+  temperature: number;
+  description: string;
+  icon: string;
+}

@@ -136,7 +136,6 @@ export default {
     };
 
     const bgClass = computed(() => {
-      console.log("test");
       if (
         weatherData.value &&
         weatherData.value && weatherData.value.weather[0] && weatherData.value.weather[0].icon.endsWith("n")

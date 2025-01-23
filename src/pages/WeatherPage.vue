@@ -84,6 +84,19 @@ export default {
           .catch((error) => {
             console.log(error);
           });
+      } else if ($q.platform.is.cordova && $q.platform.is.android) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            lat.value = position.coords.latitude;
+            lon.value = position.coords.longitude;
+            console.log("Cordova location:", lat.value, lon.value); // Debug log
+            getWeatherByCoords();
+          },
+          (error) => {
+            console.log("Geolocation error: ", error);
+          },
+          { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+        );
       } else {
         navigator.geolocation.getCurrentPosition((position) => {
           //console.log("position: ", position); 

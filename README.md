@@ -44,6 +44,13 @@ quasar build
 cordova build android
 ```
 
+### Build and run the Electron app
+
+```bash
+quasar build -m electron
+quasar dev -m electron
+```
+
 ### Customize the configuration
 
 See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).

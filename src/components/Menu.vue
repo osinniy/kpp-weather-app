@@ -15,16 +15,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { QItem, QItemSection, QItemLabel, QIcon } from 'quasar';
+import { defineComponent } from 'vue'
+import { QItem, QItemSection, QItemLabel, QIcon } from 'quasar'
 
 export interface ItemProps {
-  title: string;
-  caption?: string;
-  link?: string;
-  icon?: string;
-  active?: boolean;
-};
+  title: string
+  caption?: string
+  link?: string
+  icon?: string
+  active?: boolean
+}
 
 export default defineComponent({
   name: 'EssentialLink',
@@ -32,33 +32,33 @@ export default defineComponent({
     QItem,
     QItemSection,
     QItemLabel,
-    QIcon
+    QIcon,
   },
   props: {
     title: {
       type: String,
-      required: true
+      required: true,
     },
 
     caption: {
       type: String,
-      default: ''
+      default: '',
     },
 
     link: {
       type: String,
-      default: '#'
+      default: '#',
     },
 
     icon: {
       type: String,
-      default: ''
+      default: '',
     },
 
     active: {
       type: Boolean,
-      default: false
-    }
-  }
-});
+      default: false,
+    },
+  },
+})
 </script>

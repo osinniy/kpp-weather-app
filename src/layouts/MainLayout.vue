@@ -24,8 +24,13 @@
         </q-item-label>
 
         <!-- Menu links -->
-        <EssentialLink v-for="link in linksList" :key="link.title" v-bind="link"
-          :active="link.link ? isActiveLink(link.link) : false" exact />
+        <EssentialLink
+          v-for="link in linksList"
+          :key="link.title"
+          v-bind="link"
+          :active="link.link ? isActiveLink(link.link) : false"
+          exact
+        />
       </q-list>
     </q-drawer>
 
@@ -37,41 +42,41 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, computed } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { useRoute } from 'vue-router';
-import Item from 'components/Menu.vue';
+import { defineComponent, onMounted, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
+import Item from 'components/Menu.vue'
 
 export default defineComponent({
   name: 'MainLayout',
 
   components: {
-    EssentialLink: Item
+    EssentialLink: Item,
   },
 
   setup() {
-    const { t, locale } = useI18n();
-    const route = useRoute();
+    const { t, locale } = useI18n()
+    const route = useRoute()
 
     // Check if the link is active
     const isActiveLink = (link: string) => {
-      return route.path === link;
-    };
+      return route.path === link
+    }
 
     // Toggle language between English and Ukrainian
     const toggleLanguage = () => {
-      const newLocale = locale.value === 'en-US' ? 'uk' : 'en-US';
-      locale.value = newLocale;
-      localStorage.setItem('user-locale', newLocale);
-    };
+      const newLocale = locale.value === 'en-US' ? 'uk' : 'en-US'
+      locale.value = newLocale
+      localStorage.setItem('user-locale', newLocale)
+    }
 
     // Load saved locale from localStorage on mount
     onMounted(() => {
-      const savedLocale = localStorage.getItem('user-locale');
+      const savedLocale = localStorage.getItem('user-locale')
       if (savedLocale) {
-        locale.value = savedLocale;
+        locale.value = savedLocale
       }
-    });
+    })
 
     // List of menu links
     const linksList = computed(() => [
@@ -79,30 +84,30 @@ export default defineComponent({
         title: t('mainWeatherPageTitle'),
         caption: t('mainWeatherPageCaption'),
         icon: 'home',
-        link: '/'
+        link: '/',
       },
       {
         title: t('weatherForecastTitle'),
         caption: t('weatherForecastCaption'),
         icon: 'cloud',
-        link: '/weather-forecast'
-      }
-    ]);
+        link: '/weather-forecast',
+      },
+    ])
 
-    return { t, isActiveLink, toggleLanguage, linksList };
+    return { t, isActiveLink, toggleLanguage, linksList }
   },
 
   data() {
     return {
-      leftDrawerOpen: false
+      leftDrawerOpen: false,
     }
   },
 
   methods: {
     // Toggle the left drawer
     toggleLeftDrawer() {
-      this.leftDrawerOpen = !this.leftDrawerOpen;
-    }
-  }
-});
+      this.leftDrawerOpen = !this.leftDrawerOpen
+    },
+  },
+})
 </script>

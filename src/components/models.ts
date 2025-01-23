@@ -1,15 +1,15 @@
 export interface Todo {
-  id: number;
-  content: string;
+  id: number
+  content: string
 }
 
 export interface Meta {
-  totalCount: number;
+  totalCount: number
 }
 
 export interface WeatherForecast {
-  date: string;
-  temperature: number;
-  description: string;
-  icon: string;
+  date: string
+  temperature: number
+  description: string
+  icon: string
 }

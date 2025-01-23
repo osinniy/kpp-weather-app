@@ -1,6 +1,6 @@
-import { defineStore } from 'pinia';
-import { fetchWeatherForecast } from '../services/weather-service';
-import type { WeatherForecast } from 'components/models';
+import { defineStore } from 'pinia'
+import { fetchWeatherForecast } from '../services/weather-service'
+import type { WeatherForecast } from 'components/models'
 
 export const useWeatherStore = defineStore('weather', {
   state: () => ({
@@ -11,15 +11,15 @@ export const useWeatherStore = defineStore('weather', {
 
   actions: {
     async getForecast(city: string) {
-      this.loading = true;
+      this.loading = true
       try {
-        this.forecast = await fetchWeatherForecast(city);
-        this.error = null;
+        this.forecast = await fetchWeatherForecast(city)
+        this.error = null
       } catch {
-        this.error = 'Failed to fetch weather data';
+        this.error = 'Failed to fetch weather data'
       } finally {
-        this.loading = false;
+        this.loading = false
       }
     },
   },
-});
+})
